@@ -66,7 +66,9 @@ type Mutation {
     createUser(data:createUserInput!):User!
     deleteUser(id:ID!):User!
     createPost(post:createPostInput!):Post!
+    deletePost(id:ID!):Post!
     createComment(comment:createCommentInput!):Comment!
+    deleteComment(id:ID!):Comment!
     
 }
 
@@ -199,7 +201,7 @@ const resolvers = {
 
         },
         deleteUser(parent, args, cntx, info) {
-            
+
             const userIndex = usersDemo.findIndex((user) => user.id === args.id)
             if (userIndex === -1) {
                 throw new Error("user not found");
@@ -209,12 +211,12 @@ const resolvers = {
                 const match = post.author === args.id;
 
                 if (match) {
-                     commentsDemo.filter((comment) => comment.post !== post.id)
+                    commentsDemo.filter((comment) => comment.post !== post.id)
                 }
 
                 return !match;
             });
-             commentsDemo.filter((comment) => comment.author !== args.id)
+            commentsDemo.filter((comment) => comment.author !== args.id)
             return deletedUser[0];
         },
         createPost(parent, args, cntx, info) {
@@ -232,6 +234,21 @@ const resolvers = {
             };
             postsDemo.push(post);
             return post;
+
+        },
+        deletePost(parent, args, cntx, info) {
+
+            const postIndex = postsDemo.findIndex(post => post.id === args.id);
+            if (postIndex === -1) {
+                throw new Error("Post not found");
+            }
+            const deletedPost = postsDemo.splice(postIndex, 1);
+            commentsDemo.filter((comment) => {
+                comment.post != args.id;
+            });
+
+            return deletedPost[0];
+
 
         },
 
@@ -254,6 +271,16 @@ const resolvers = {
             commentsDemo.push(comment);
             return comment;
 
+
+        },
+        deleteComment(parent, args, cntx, info) {
+
+            const commentIndex = commentsDemo.findIndex(comment => comment.id === args.id);
+            if (commentIndex === -1) {
+                throw new Error(" no comment found");
+            }
+            const deleteComment = commentsDemo.splice(commentIndex, 1);
+            return deleteComment[0];
 
         }
     },
