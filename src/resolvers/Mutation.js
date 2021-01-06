@@ -22,6 +22,35 @@ const Mutation = {
 
 
     },
+    updateUser(parent, args, {
+        db
+    }, info) {
+
+        const {
+            id,
+            data
+        } = args;
+
+        const user = db.users.find(user => user.id === id);
+        if (!user) {
+            throw new Error("No user found!");
+        }
+        if (typeof data.email === 'string') {
+            const emailTaken = db.users.some(user => user.email = data.email);
+            if (emailTaken) {
+                throw new Error("Email taken!");
+            }
+            user.email = data.email;
+        }
+        if (typeof data.age !== "undefined") {
+            user.age = data.age;
+        }
+
+        if (typeof data.name === "string") {
+            user.name = data.name;
+        }
+        return user;
+    },
     deleteUser(parent, args, {
         db
     }, info) {
@@ -79,7 +108,31 @@ const Mutation = {
 
 
     },
+    updatePost(parent, args, {
+        db
+    }, info) {
 
+        const {
+            id,
+            data
+        } = args;
+        const updatedPost = db.posts.find(post => post.id === id);
+        if (!updatedPost) {
+            throw new Error("Post not found!!");
+        }
+        if (typeof data.title === "string") {
+            updatedPost.title = data.title;
+        }
+        if (typeof data.body === "string") {
+            updatedPost.body = data.body;
+        }
+        if (typeof data.published === "boolean") {
+            updatedPost.published = data.published;
+        }
+
+        return updatedPost;
+
+    },
     createComment(parent, args, {
         db
     }, info) {
@@ -109,11 +162,22 @@ const Mutation = {
 
         const commentIndex = db.comments.findIndex(comment => comment.id === args.id);
         if (commentIndex === -1) {
-            throw new Error(" no comment found");
+            throw new Error(" No comment found");
         }
         const deleteComment = db.comments.splice(commentIndex, 1);
         return deleteComment[0];
 
+    },
+    updateComment(parent,args,{db},info){
+        const {id,data}=args;
+        const updatedComment=db.comments.find(comment=>comment.id===id);
+        if(!updatedComment){
+            throw new Error("No comment found");
+        }
+        if(typeof data.text==="string"){
+            updatedComment.text=data.text; 
+        }
+        return updatedComment;
     }
 }
 

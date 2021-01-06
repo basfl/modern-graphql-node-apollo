@@ -9,24 +9,22 @@ import Post from './resolvers/Post'
 import Comment from './resolvers/Comment'
 import db from './db';
 
-//resolver
-const resolvers = {
-    Query,
-    Mutation,
-    Post,
-    User,
-    Comment
-};
 
 const server = new GraphQLServer({
     typeDefs: "./src/schema.graphql",
-    resolvers: resolvers,
+    resolvers: {
+        Query,
+        Mutation,
+        Post,
+        User,
+        Comment
+    },
     context: {
         db
     }
-})
+});
 
 
 server.start(() => {
     console.log("server is running ...");
-})
+});
