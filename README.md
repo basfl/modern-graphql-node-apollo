@@ -58,3 +58,17 @@ mutation {
     text
   }
 }
+
+#### subscription
+
+  * 
+  subscription {
+  comment(postId:"123"){
+    id
+    text
+    author{
+      id
+      name
+    }
+  }
+}
