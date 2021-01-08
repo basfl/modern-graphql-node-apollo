@@ -206,26 +206,39 @@ const Mutation = {
         };
         db.comments.push(comment);
         pubsub.publish(`comment ${args.comment.post}`, {
-            comment
+            comment: {
+                mutation: "CREATED",
+                data: comment
+            }
         })
         return comment;
 
 
     },
     deleteComment(parent, args, {
-        db
+        db,
+        pubsub
     }, info) {
 
         const commentIndex = db.comments.findIndex(comment => comment.id === args.id);
         if (commentIndex === -1) {
             throw new Error(" No comment found");
         }
-        const deleteComment = db.comments.splice(commentIndex, 1);
-        return deleteComment[0];
+        const [deletedComment] = db.comments.splice(commentIndex, 1);
+
+        pubsub.publish(`comment ${deletedComment.post}`, {
+            comment: {
+                mutation: "DELETED",
+                data: deletedComment
+            }
+        })
+
+        return deletedComment;
 
     },
     updateComment(parent, args, {
-        db
+        db,
+        pubsub
     }, info) {
         const {
             id,
@@ -238,6 +251,12 @@ const Mutation = {
         if (typeof data.text === "string") {
             updatedComment.text = data.text;
         }
+        pubsub.publish(`comment ${updatedComment.post}`, {
+            comment: {
+                mutation: "UPDATED",
+                data: updatedComment
+            }
+        })
         return updatedComment;
     }
 }
