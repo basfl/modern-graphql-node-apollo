@@ -72,3 +72,6 @@ mutation {
     }
   }
 }
+
+### Prisma :
+ * prisma init {projectName}
