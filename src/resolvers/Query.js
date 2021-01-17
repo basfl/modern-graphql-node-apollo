@@ -1,4 +1,4 @@
-const Query  = {
+const Query = {
 
     me() {
 
@@ -11,59 +11,86 @@ const Query  = {
     },
 
     users(paranet, args, {
-        db
+        db,
+        prisma
     }, info) {
-        if (!args.q) {
-            return db.users;
+        const opArgs = {};
+        if (args.q != null) {
+            opArgs.where = {
+                OR: [{
+                    name_contains: args.q
+                }, {
+                    email_contains: args.q
+                }]
+
+            }
         }
-        return db.users.filter((user) => {
-            return user.name.toLowerCase().includes(args.q.toLowerCase());
-        })
+        return prisma.query.users(opArgs, info);
 
     },
 
     post(paranet, args, {
-        db
+        prisma
     }, info) {
 
-        if (!args.authID) {
-            return {
-                id: null,
-                title: null,
-                body: null,
-                published: null,
+        return prisma.query.post(null, info);
 
-            };
+        // if (!args.authID) {
+        //     return {
+        //         id: null,
+        //         title: null,
+        //         body: null,
+        //         published: null,
 
-        }
+        //     };
 
-        return db.posts.find((post) => {
-            return post.author.toLowerCase().includes(args.authID.toLowerCase());
+        // }
 
-        })
+        // return db.posts.find((post) => {
+        //     return post.author.toLowerCase().includes(args.authID.toLowerCase());
+
+        // })
 
     },
 
     posts(parent, args, {
-        db
+        prisma
     }, info) {
-        if (!args.q) {
-            return db.posts;
+        const opArgs = {};
+        if (opArgs != null) {
+            opArgs.where = {
+                OR: [{
+                        body_contains: args.q
+                    },
+                    {
+                        title_contains: args.q
+                    }
+
+                ]
+            }
         }
-        return db.posts.filter((post) => {
-            return post.title.toLowerCase().includes(args.q.toLowerCase()) ||
-                post.body.toLowerCase().includes(args.q.toLowerCase());
-        })
+        return prisma.query.posts(opArgs, info);
+        // if (!args.q) {
+        //     return db.posts;
+        // }
+        // return db.posts.filter((post) => {
+        //     return post.title.toLowerCase().includes(args.q.toLowerCase()) ||
+        //         post.body.toLowerCase().includes(args.q.toLowerCase());
+        // })
     },
 
     comments(parent, args, {
-        db
+        prisma
     }, info) {
 
-        return db.comments;
+        return prisma.query.comments(null,info);
+        // return db.comments;
 
     }
 
 }
 
-export { Query as default }
+export {
+    Query as
+    default
+}
