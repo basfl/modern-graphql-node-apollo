@@ -15,22 +15,44 @@ const Subscription = {
             return pubsub.asyncIterator('count')
         }
     },
-    comment:{
-        subscribe(parent, {postId}, {
-            db, pubsub
-        }, info){
-            const post=db.posts.find(post=>post.id===postId && post.published);
-            if(!post){
-                throw new Error("No post find for subscription");
-            }
-            return pubsub.asyncIterator(`comment ${postId}`);
+    comment: {
+        subscribe(parent, {
+            postId
+        }, {
+            prisma
+        }, info) {
+
+            return prisma.subscription.comment({
+                where: {
+                    node: {
+                        post: {
+                            id: postId
+                        }
+                    }
+                }
+            }, info);
+            //     const post=db.posts.find(post=>post.id===postId && post.published);
+            //     if(!post){
+            //         throw new Error("No post find for subscription");
+            //     }
+            //     return pubsub.asyncIterator(`comment ${postId}`);
         }
     },
-    post:{
-        subscribe(parent, {postId}, {
-             pubsub
-        }, info){
-            return pubsub.asyncIterator("post");
+    post: {
+        subscribe(parent, {
+            postId
+        }, {
+            prisma
+        }, info) {
+
+            return prisma.subscription.post({
+                where: {
+                    node: {
+                        id: postId
+                    }
+                }
+            }, info);
+            //  return pubsub.asyncIterator("post");
         }
 
     }

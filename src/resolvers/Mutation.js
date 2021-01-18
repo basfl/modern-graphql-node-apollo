@@ -97,22 +97,22 @@ const Mutation = {
     }, info) {
 
         // console.log(args.comment.post);
-        // return prisma.mutation.createComment({
-        //     data: {
-        //         text: args.comment.text,
-        //         author: {
-        //             connect: {
-        //                 id: args.comment.author
-        //             }
-        //         },
-        //         post: {
-        //             connect: {
-        //                 id: args.comment.post
-        //             }
-        //         }
+        return prisma.mutation.createComment({
+            data: {
+                text: args.comment.text,
+                author: {
+                    connect: {
+                        id: args.comment.author
+                    }
+                },
+                post: {
+                    connect: {
+                        id: args.comment.post
+                    }
+                }
 
-        //     }
-        // }, info);
+            }
+        }, info);
 
     },
     async deleteComment(parent, args, {
