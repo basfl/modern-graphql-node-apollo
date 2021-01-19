@@ -75,3 +75,9 @@ mutation {
 
 ### Prisma :
  * prisma init {projectName}
+
+### Generate token from prisma :
+ * prisma token 
+ * {
+  "Authorization":"Bearer {token}"
+}
