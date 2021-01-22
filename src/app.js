@@ -10,7 +10,7 @@ import User from './resolvers/User'
 import Post from './resolvers/Post'
 import Comment from './resolvers/Comment'
 import db from './db';
-import  prisma from  './prisma';
+import prisma from './prisma';
 
 const pubsub = new PubSub();
 const server = new GraphQLServer({
@@ -23,10 +23,15 @@ const server = new GraphQLServer({
         User,
         Comment
     },
-    context: {
-        db,
-        pubsub,
-        prisma
+    context(request) {
+        return ({
+            db,
+            pubsub,
+            prisma,
+            request
+
+        });
+
     }
 });
 
