@@ -1,12 +1,17 @@
+import getUserId from '../utils/getUserId';
 const Query = {
 
-    me() {
+    async me(paranet, args, {
+        prisma,
+        request
+    }, info) {
 
-        return {
-            id: "abc123",
-            name: "testuser",
-            email: "test@gmail.com"
-        }
+        const userId = getUserId(request);
+        return prisma.query.user({
+            where: {
+                id: userId
+            }
+        }, info);
 
     },
 
@@ -29,28 +34,29 @@ const Query = {
 
     },
 
-    post(paranet, args, {
-        prisma
+    async post(paranet, args, {
+        prisma,
+        request
     }, info) {
+        const userId = getUserId(request, false);
+        const posts = await prisma.query.posts({
+            where: {
+                id: args.id,
+                OR: [{
+                    published: true
+                }, {
+                    author: {
+                        id: userId
+                    }
+                }]
+            }
+        }, info)
 
-        return prisma.query.post(null, info);
+        if (posts.length === 0) {
+            throw new Error('Post not found')
+        }
 
-        // if (!args.authID) {
-        //     return {
-        //         id: null,
-        //         title: null,
-        //         body: null,
-        //         published: null,
-
-        //     };
-
-        // }
-
-        // return db.posts.find((post) => {
-        //     return post.author.toLowerCase().includes(args.authID.toLowerCase());
-
-        // })
-
+        return posts[0]
     },
 
     posts(parent, args, {
@@ -83,7 +89,7 @@ const Query = {
         prisma
     }, info) {
 
-        return prisma.query.comments(null,info);
+        return prisma.query.comments(null, info);
         // return db.comments;
 
     }

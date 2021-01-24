@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
-import getUserId from '../utils/getUserId'
+import getUserId from '../utils/getUserId';
 const Mutation = {
 
     async createUser(parent, args, {
@@ -209,7 +209,7 @@ const Mutation = {
         prisma,
         request
     }, info) {
-        const userId = getUserId(request)
+        const userId = getUserId(request);
         const commentExists = await prisma.exists.Comment({
             id: args.id,
             author: {
