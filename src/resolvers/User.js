@@ -1,4 +1,5 @@
-const User= {
+import getUserId from '../utils/getUserId';
+const User = {
     // posts(parent, args, {
     //     db
     // }, info) {
@@ -13,6 +14,21 @@ const User= {
     //         return comment.author === parent.id;
     //     })
     // }
+    email(parent, args, {
+        request
+    }, info) {
+
+        const userId = getUserId(request, false);
+        if (userId && userId === parent.id) {
+            return parent.email;
+        } else {
+            return null
+        }
+
+    }
 }
 
-export {User as default}
+export {
+    User as
+    default
+}
