@@ -1,4 +1,4 @@
-### Query
+# Query
  * query {
   posts{id,title,
     author
@@ -12,7 +12,7 @@
 }
 
 
-### Mutations
+# Mutations
  * 
     mutation {
   createUser(data:{
@@ -59,7 +59,7 @@ mutation {
   }
 }
 
-#### subscription
+# subscription
 
   * 
   subscription {
@@ -73,10 +73,25 @@ mutation {
   }
 }
 
-### Prisma :
+# Fragments
+* 
+query {
+  users{
+		... usersFields
+  }
+}
+
+fragment usersFields on User {
+      id
+    name
+    email
+}
+
+
+# Prisma :
  * prisma init {projectName}
 
-### Generate token from prisma :
+# Generate token from prisma :
  * prisma token 
  * {
   "Authorization":"Bearer {token}"
