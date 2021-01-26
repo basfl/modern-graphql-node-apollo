@@ -24,8 +24,6 @@ const Query = {
             opArgs.where = {
                 OR: [{
                     name_contains: args.q
-                }, {
-                    email_contains: args.q
                 }]
 
             }
