@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken';
 import getUserId from '../utils/getUserId';
+import generateToken from '../utils/generateToken'
 const Mutation = {
 
     async createUser(parent, args, {
@@ -21,9 +21,7 @@ const Mutation = {
         });
         return ({
             user,
-            token: jwt.sign({
-                id: user.id
-            }, "thisisasecret")
+            token: generateToken(user.id)
         })
 
     },
@@ -35,20 +33,21 @@ const Mutation = {
             where: {
                 email: args.data.email
             }
-        });
+        })
+
         if (!user) {
-            throw new("unable to login !");
+            throw new Error('Unable to login')
         }
-        const isMatch = await bcrypt.compare(args.data.password, user.password);
+
+        const isMatch = await bcrypt.compare(args.data.password, user.password)
+
         if (!isMatch) {
-            throw new("unable to login  !");
+            throw new Error('Unable to login')
         }
 
         return ({
             user,
-            token: jwt.sign({
-                id: user.id
-            }, "thisisasecret")
+            token: generateToken(user.id)
         });
 
 
