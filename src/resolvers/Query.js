@@ -19,7 +19,10 @@ const Query = {
         db,
         prisma
     }, info) {
-        const opArgs = {};
+        const opArgs = {
+            first: args.first,
+            skip: args.skip
+        };
         if (args.q != null) {
             opArgs.where = {
                 OR: [{
@@ -38,6 +41,8 @@ const Query = {
     }, info) {
         const userId = getUserId(request, false);
         const posts = await prisma.query.posts({
+            first: args.first,
+            skip: args.skip,
             where: {
                 id: args.id,
                 OR: [{
