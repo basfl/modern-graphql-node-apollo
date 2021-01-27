@@ -21,7 +21,8 @@ const Query = {
     }, info) {
         const opArgs = {
             first: args.first,
-            skip: args.skip
+            skip: args.skip,
+            after: args.after
         };
         if (args.q != null) {
             opArgs.where = {
@@ -43,6 +44,7 @@ const Query = {
         const posts = await prisma.query.posts({
             first: args.first,
             skip: args.skip,
+            after: args.after,
             where: {
                 id: args.id,
                 OR: [{
@@ -67,6 +69,9 @@ const Query = {
     }, info) {
         const userId = getUserId(request)
         const opArgs = {
+            first: args.first,
+            skip: args.skip,
+            after: args.after,
             where: {
                 author: {
                     id: userId
@@ -130,8 +135,12 @@ const Query = {
     comments(parent, args, {
         prisma
     }, info) {
-
-        return prisma.query.comments(null, info);
+        const opArgs = {
+            first: args.first,
+            skip: args.skip,
+            after: args.after
+        }
+        return prisma.query.comments(opArgs, info);
         // return db.comments;
 
     }
