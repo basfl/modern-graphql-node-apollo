@@ -1,10 +1,12 @@
+# import UserOrderByInput, PostOrderByInput, CommentOrderByInput from './generated/prisma.graphql'
+
 type Query {
-	users(q: String, first: Int, skip: Int, after: String): [User!]!  
+	users(q: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput): [User!]!  
 	me: User!
 	post(id: ID!): Post!
-	posts(q: String, first: Int, skip: Int, after: String): [Post!]!
-	myPosts(query: String, first: Int, skip: Int, after: String): [Post!]!
-	comments(first: Int, skip: Int, after: String): [Comment]!
+	posts(q: String, first: Int, skip: Int, after: String, orderBy: PostOrderByInput): [Post!]!
+	myPosts(query: String, first: Int, skip: Int, after: String, orderBy: PostOrderByInput): [Post!]!
+	comments(first: Int, skip: Int, after: String, orderBy: CommentOrderByInput): [Comment]!
 }
 type Mutation {
 	createUser(data: createUserInput!): AuthPayload!
@@ -84,7 +86,7 @@ type User {
 	posts: [Post!]!
 	comments: [Comment!]!
 	updatedAt: String!
-    createdAt: String!
+	createdAt: String!
 }
 type Post {
 	id: ID!
@@ -94,7 +96,7 @@ type Post {
 	author: User!
 	comments: [Comment!]!
 	updatedAt: String!
-    createdAt: String!
+	createdAt: String!
 }
 
 type Comment {
@@ -103,7 +105,7 @@ type Comment {
 	author: User!
 	post: Post!
 	updatedAt: String!
-    createdAt: String!
+	createdAt: String!
 }
 
 enum  MutationType {
