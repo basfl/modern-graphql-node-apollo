@@ -28,8 +28,13 @@ const server = new GraphQLServer({
 });
 
 
+<<<<<<< HEAD
 server.start({
     port: process.env.PORT || 4000
 }, () => {
     console.log("server is running ...");
+=======
+server.start(() => {
+    console.log("server is running ...");  
+>>>>>>> stable-prod1
 });
