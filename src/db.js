@@ -16,7 +16,7 @@ const users = [{
     age: 30
 }
 
-];
+]; 
 const posts = [{
     id: "cvb",
     title: "post titile1",
