@@ -91,7 +91,7 @@ fragment usersFields on User {
 # Prisma :
  * prisma init {projectName}
 
-# Generate token from prisma :
+# prisma commands :
   * prisma deploy -e ../config/dev.env
  * prisma token 
  * {
