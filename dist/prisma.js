@@ -1,19 +1,21 @@
-import {
-    Prisma
-} from 'prisma-binding';
+'use strict';
 
-import {
-    fragmentReplacements
-} from './resolvers/index';
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
 
-console.log("******"+process.env.PRISMA_ENDPOINT);
-const prisma = new Prisma({
+var _prismaBinding = require('prisma-binding');
+
+var _index = require('./resolvers/index');
+
+console.log("******" + process.env.PRISMA_ENDPOINT);
+var prisma = new _prismaBinding.Prisma({
     typeDefs: "src/generated/prisma.graphql",
     endpoint: process.env.PRISMA_ENDPOINT,
     secret: "thisismysupersecrettext",
-    fragmentReplacements
+    fragmentReplacements: _index.fragmentReplacements
 });
-
 
 // prisma.query.users(null, '{ id name posts { id title } }').then((data) => {
 //     console.log(JSON.stringify(data, undefined, 2))
@@ -169,7 +171,4 @@ const prisma = new Prisma({
 // })
 
 
-export {
-    prisma as
-    default
-}
+exports.default = prisma;

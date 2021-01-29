@@ -4,21 +4,26 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon src/app.js --ext js,graphql --exec babel-node",
+    "start": "env-cmd ./config/prod.env node dist/app.js",
+    "dev": "env-cmd ./config/dev.env nodemon src/app.js --ext js,graphql --exec babel-node",
+    "heroku-postbuild": "babel src --out-dir dist --copy-files",
     "test": "echo \"Error: no test specified\" && exit 1",
     "get-schema": "graphql get-schema -p prisma"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "bcryptjs": "^2.4.3",
+    "env-cmd": "^8.0.2",
     "graphql-cli": "^2.16.4",
     "graphql-yoga": "^1.14.10",
     "jsonwebtoken": "^8.3.0",
     "nodemon": "^2.0.6",
-    "prisma-binding": "^2.1.1"
+    "prisma-binding": "^2.1.1",
+    "save": "^2.4.0"
   }
 }

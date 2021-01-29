@@ -1,3 +1,4 @@
+import '@babel/polyfill'
 import {
     GraphQLServer,
     PubSub
@@ -28,6 +29,8 @@ const server = new GraphQLServer({
 });
 
 
-server.start(() => {
-    console.log("server is running ...");  
+server.start({
+    port: process.env.PORT || 4000
+}, () => {
+    console.log("server is running ...");
 });
