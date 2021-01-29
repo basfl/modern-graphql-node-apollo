@@ -29,5 +29,5 @@ const server = new GraphQLServer({
 
 
 server.start(() => {
-    console.log("server is running ...");
+    console.log("server is running ...");  
 });
