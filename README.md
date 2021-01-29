@@ -92,7 +92,18 @@ fragment usersFields on User {
  * prisma init {projectName}
 
 # Generate token from prisma :
+  * prisma deploy -e ../config/dev.env
  * prisma token 
  * {
   "Authorization":"Bearer {token}"
-}
+  }
+  * prisma login 
+  * prisma deploy -e ../config/prod.env
+
+# Production :
+ * production database
+ * host prisma docker container
+ * host node js 
+    ## services
+       * heroku
+       * prisma cloud  
