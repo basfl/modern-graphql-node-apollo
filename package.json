@@ -7,7 +7,7 @@
     "start": "env-cmd ./config/prod.env node dist/app.js",
     "dev": "env-cmd ./config/dev.env nodemon src/app.js --ext js,graphql --exec babel-node",
     "heroku-postbuild": "babel src --out-dir dist --copy-files",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "get-schema": "graphql get-schema -p prisma"
   },
   "author": "",
@@ -21,6 +21,7 @@
     "env-cmd": "^8.0.2",
     "graphql-cli": "^2.16.4",
     "graphql-yoga": "^1.14.10",
+    "jest": "^23.5.0",
     "jsonwebtoken": "^8.3.0",
     "nodemon": "^2.0.6",
     "prisma-binding": "^2.1.1",

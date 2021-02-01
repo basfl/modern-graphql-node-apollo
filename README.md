@@ -99,7 +99,9 @@ fragment usersFields on User {
   }
   * prisma login 
   * prisma deploy -e ../config/prod.env
-
+# Test env
+  * jest
+  * prisma deploy -e ../config/test.envt e
 # Production :
  * production database
  * host prisma docker container
