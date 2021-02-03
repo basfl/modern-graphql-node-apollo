@@ -101,7 +101,7 @@ fragment usersFields on User {
   * prisma deploy -e ../config/prod.env
 # Test env
   * jest
-  * prisma deploy -e ../config/test.envt e
+  * prisma deploy -e ../config/test.env
 # Production :
  * production database
  * host prisma docker container
